@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@airstack/node": "^0.0.7",
+    "axios": "^1.7.2",
+    "dotenv": "^16.4.5",
+    "frames": "^0.0.1",
+    "frames.js": "^0.17.0"
+  }
+}
