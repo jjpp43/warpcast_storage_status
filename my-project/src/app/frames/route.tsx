@@ -1,8 +1,11 @@
 /* eslint-disable react/jsx-key */
-import { Button } from "frames.js/next";
+import { Button, fetchMetadata } from 'frames.js/next';
 import { frames } from "./frames";
 
+
+
 const frameHandler = frames(async (ctx) => {
+
     return {
         image: "http://localhost:3000/background.png",
         buttons: [
@@ -12,6 +15,10 @@ const frameHandler = frames(async (ctx) => {
         ],
     };
 });
+
+
+
+
 
 export const GET = frameHandler;
 export const POST = frameHandler;

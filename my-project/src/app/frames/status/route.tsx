@@ -1,67 +1,67 @@
 /* eslint-disable react/jsx-key */
+
 import { frames } from "../frames";
 import { Button } from "frames.js/next";
 import axios, { HttpStatusCode } from "axios";
 import { config } from "dotenv";
 import { init } from "@airstack/node";
 
-const userData = {
-    userCastStorage: "",
-    userLinkStorage: "",
-    userReactionStorage: "",
-    userDataStorage: 0,
-}
+config();
+init(`${process.env.AIRSTACK_API_KEY}`);
 
-const main = async (id: number) => {
-    const server = "https://hubs.airstack.xyz";
+const server = "https://hubs.airstack.xyz";
+
+//Query to fetch user information from airstack
+const fetchUserData = async (id: number) => {
     try {
-        config();
-        init(`${process.env.AIRSTACK_API_KEY}`);
         const response = await axios.get(`${server}/v1/storageLimitsByFid?fid=${id}`, {
-
             headers: {
                 "Content-Type": "application/json",
-                "x-airstack-hubs": process.env.AIRSTACK_API_KEY as string,
+                "x-airstack-hubs": process.env.AIRSTACK_API_KEY,
             },
         });
 
-        // Check if response.data is defined
         if (!response.data) {
             console.error("Response data is undefined.");
-            return;
+            return null;
         }
 
         const tmp = response.data.limits;
+        const userData = {
+            userCastStorage: 0,
+            userLinkStorage: 0,
+            userReactionStorage: 0,
+            userDataStorage: 0,
+            userFid: id,
+        };
 
         tmp.forEach((i: any) => {
             if (i["storeType"] === 'STORE_TYPE_CASTS') {
-                var t = i['used'] / i['limit'];
-                userData.userCastStorage = (parseFloat(t.toFixed(3)) * 100).toFixed(1);
+                const t = i['used'] / i['limit'];
+                userData.userCastStorage = (parseFloat(t.toFixed(3)) * 100);
             }
             if (i["storeType"] === 'STORE_TYPE_LINKS') {
-                var t = i['used'] / i['limit'];
-                userData.userLinkStorage = (parseFloat(t.toFixed(3)) * 100).toFixed(1);
+                const t = i['used'] / i['limit'];
+                userData.userLinkStorage = (parseFloat(t.toFixed(3)) * 100);
             }
             if (i["storeType"] === 'STORE_TYPE_REACTIONS') {
-                var t = i['used'] / i['limit'];
-                userData.userReactionStorage = (parseFloat(t.toFixed(3)) * 100).toFixed(1);
+                const t = i['used'] / i['limit'];
+                userData.userReactionStorage = (parseFloat(t.toFixed(3)) * 100);
             }
             if (i["storeType"] === 'STORE_TYPE_USER_DATA') {
                 userData.userDataStorage = i['used'] - 1;
             }
-        })
-
-        console.log('Fetch Complete!')
+        });
+        console.log("Fetch Complete!!")
         console.log(userData.userCastStorage);
+
         console.log(userData.userLinkStorage);
+
         console.log(userData.userReactionStorage);
+
         console.log(userData.userDataStorage);
-        //To check what's going on with POST 302
-        if (HttpStatusCode.Found) {
-            // console.log(response);
-        }
+        return userData;
     } catch (e) {
-        // Enhanced error logging
         if (axios.isAxiosError(e)) {
             console.error("Axios error:", e.message);
             if (e.response) {
@@ -72,17 +72,60 @@ const main = async (id: number) => {
         } else {
             console.error("Unexpected error:", e);
         }
+        return null;
     }
 }
 
 
-export const POST = frames(async (ctx) => {
-    const foo = ctx.message?.castId?.fid;
-    main(406278);
 
-    console.log("foo: ", foo);
+export const POST = frames(async (ctx) => {
+    const context = ctx.message;
+    const fid = ctx.message?.requesterFid;
+    //Fetch User Info and update from the inital values so that other frames can access this information
+    let updatedState = {
+        userCastStorage: 0,
+        userLinkStorage: 0,
+        userReactionStorage: 0,
+        userDataStorage: 0,
+        userFid: fid,
+    };
+
+    if (typeof fid === 'number') {
+        let data = await fetchUserData(fid);
+        if (data) {
+            updatedState = data;
+            console.log("--- State Updated! ---");
+            console.log("FID: ", fid);
+            console.log(context);
+            console.log("----------------------");
+        } else {
+            console.error("Error fetching user data.");
+        }
+    } else {
+        console.error("FID is undefined or not a number.");
+    }
+
+
     return {
-        image: <div tw="flex">Status page: {userData.userCastStorage}</div>, // foo: bar
+        image:
+            <div
+                style={{
+                    height: '100%',
+                    width: '100%',
+                    display: 'flex',
+                    backgroundColor: "#453ECA",
+                    flexDirection: "column",
+                }}>
+                <span tw="flex flex-col py-9 px-12">
+                    <span tw="text-white">Fid: {updatedState.userFid}</span>
+                    <span tw="text-white">Cast storage: {updatedState.userCastStorage}%</span>
+                    <span tw="text-white">Follows storage: {updatedState.userLinkStorage.toFixed(1)}%</span>
+                    <span tw="text-white">Reaction storage: {updatedState.userReactionStorage.toFixed(1)}%</span>
+                    <span tw="text-white"># of units purchased: {updatedState.userDataStorage}</span>
+                    <span tw="text-white">Storage Capacity Indicator : [ &#x1F7E9; &#x1F7E9; &#x1F7E8; &#x1F7E7; ]</span>
+                </span>
+            </div>
+        ,
         buttons: [
             <Button action="post" target="/">
                 Return
