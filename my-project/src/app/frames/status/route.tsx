@@ -105,6 +105,25 @@ export const POST = frames(async (ctx) => {
         console.error("FID is undefined or not a number.");
     }
 
+    var castTextSignal, reactionTextSignal, linkTextSignal;
+
+    var determineCapacityFunction = (val: number) => {
+        console.log('Determine Signal Function Executed!')
+        if (val > 100) {
+            return "&#x1F7E6;";
+        }
+        else if (val > 75 && val <= 100) {
+            return "&#x1F7E7";
+        } else if (val <= 75 && val > 25) {
+            return "&#x1F7E8";
+        }
+        return <span>&#x1F7E9;</span>;
+    }
+
+    castTextSignal = determineCapacityFunction(updatedState.userCastStorage);
+    reactionTextSignal = determineCapacityFunction(updatedState.userReactionStorage);
+    linkTextSignal = determineCapacityFunction(updatedState.userLinkStorage);
+
 
     return {
         image:
@@ -116,13 +135,15 @@ export const POST = frames(async (ctx) => {
                     backgroundColor: "#453ECA",
                     flexDirection: "column",
                 }}>
-                <span tw="flex flex-col py-9 px-12">
-                    <span tw="text-white">Fid: {updatedState.userFid}</span>
-                    <span tw="text-white">Cast storage: {updatedState.userCastStorage}%</span>
-                    <span tw="text-white">Follows storage: {updatedState.userLinkStorage.toFixed(1)}%</span>
-                    <span tw="text-white">Reaction storage: {updatedState.userReactionStorage.toFixed(1)}%</span>
-                    <span tw="text-white"># of units purchased: {updatedState.userDataStorage}</span>
-                    <span tw="text-white">Storage Capacity Indicator : [ &#x1F7E9; &#x1F7E9; &#x1F7E8; &#x1F7E7; ]</span>
+                <span tw="flex flex-col justify-between py-9 px-12 h-full">
+                    <span tw="flex flex-col">
+                        <span tw="text-white text-3xl">FID: {updatedState.userFid}</span>
+                        <span tw="text-white text-5xl">Cast storage: {updatedState.userCastStorage}%</span>
+                        <span tw="text-white text-5xl">Follows storage: {updatedState.userLinkStorage.toFixed(1)}%</span>
+                        <span tw="text-white text-5xl">Reaction storage: {updatedState.userReactionStorage.toFixed(1)}%</span>
+                        <span tw="text-white text-5xl"># of units purchased: {updatedState.userDataStorage}</span>
+                    </span>
+                    <span tw="text-white text-3xl">Storage Capacity Indicator : [ &#x1F7E9; &#x1F7E9; &#x1F7E8; &#x1F7E7; ]</span>
                 </span>
             </div>
         ,
