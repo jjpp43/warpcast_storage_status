@@ -1,6 +1,7 @@
 import { fetchMetadata } from "frames.js/next";
+import { Metadata } from "next";
 
-export async function generateMetadata() {
+export async function generateMetadata(): Promise<Metadata> {
     return {
         title: "My Page",
         // provide a full URL to your /frames endpoint
@@ -11,6 +12,7 @@ export async function generateMetadata() {
                     ? `https://${process.env.VERCEL_URL}`
                     : "http://localhost:3000"
             )
+
         ),
     };
 }

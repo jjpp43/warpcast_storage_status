@@ -110,12 +110,12 @@ export const POST = frames(async (ctx) => {
     var determineCapacityFunction = (val: number) => {
         console.log('Determine Signal Function Executed!')
         if (val > 100) {
-            return "&#x1F7E6;";
+            return <span>&#x1F7E6;</span>;
         }
         else if (val > 75 && val <= 100) {
-            return "&#x1F7E7";
+            return <span>&#x1F7E7;</span>;
         } else if (val <= 75 && val > 25) {
-            return "&#x1F7E8";
+            return <span>&#x1F7E8;</span>;
         }
         return <span>&#x1F7E9;</span>;
     }
@@ -134,14 +134,30 @@ export const POST = frames(async (ctx) => {
                     display: 'flex',
                     backgroundColor: "#453ECA",
                     flexDirection: "column",
+                    fontFamily: "'Pretendard', 'monospace'",
                 }}>
                 <span tw="flex flex-col justify-between py-9 px-12 h-full">
                     <span tw="flex flex-col">
-                        <span tw="text-white text-3xl">FID: {updatedState.userFid}</span>
-                        <span tw="text-white text-5xl">Cast storage: {updatedState.userCastStorage}%</span>
-                        <span tw="text-white text-5xl">Follows storage: {updatedState.userLinkStorage.toFixed(1)}%</span>
-                        <span tw="text-white text-5xl">Reaction storage: {updatedState.userReactionStorage.toFixed(1)}%</span>
-                        <span tw="text-white text-5xl"># of units purchased: {updatedState.userDataStorage}</span>
+                        <span tw="flex-row justify-around">
+                            <textarea tw="font-bold text-white text-5xl tracking-wider">STORAGE STATUS</textarea>
+                        </span>
+                        <span tw="flex-row justify-between pb-6">
+                            <span tw="text-white text-4xl">FID: {updatedState.userFid}</span>
+                            {/*<span tw="text-white text-3xl">Frame created by &#13;&#10;@flutter</span> */}
+                        </span>
+                        <span tw="flex=row">
+                            <span tw="text-5xl pr-2">{castTextSignal}</span>
+                            <span tw="text-white text-5xl pb-4">Cast storage: {updatedState.userCastStorage}%</span>
+                        </span>
+                        <span tw="flex-row">
+                            <span tw="text-5xl pr-2">{linkTextSignal}</span>
+                            <span tw="text-white text-5xl pb-4">Follows storage: {updatedState.userLinkStorage.toFixed(1)}%</span>
+                        </span>
+                        <span tw="flex-row">
+                            <span tw="text-5xl pr-2">{reactionTextSignal}</span>
+                            <span tw="text-white text-5xl pb-4">Reaction storage&nbsp;: {updatedState.userReactionStorage.toFixed(1)}%</span>
+                        </span>
+                        <span tw="text-white text-5xl pb-4"># of units purchased: {updatedState.userDataStorage}</span>
                     </span>
                     <span tw="text-white text-3xl">Storage Capacity Indicator : [ &#x1F7E9; &#x1F7E9; &#x1F7E8; &#x1F7E7; ]</span>
                 </span>
