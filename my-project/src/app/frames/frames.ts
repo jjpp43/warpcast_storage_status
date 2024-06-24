@@ -25,19 +25,45 @@ export const frames = createFrames({
     imageRenderingOptions: async () => {
         try {
             //Problem is is doesn't seem to support variable fonts. Use static fonts in prevention of error
-            const pretendardFont = fs.readFile(
+            const pretendardSemiboldFont = fs.readFile(
                 path.join(path.resolve(process.cwd(), "public"), "Pretendard-SemiBold.otf")
+            );
+            const pretendardMediumFont = fs.readFile(
+                path.join(path.resolve(process.cwd(), "public"), "Pretendard-Medium.otf")
+            );
+            const pretendardBoldFont = fs.readFile(
+                path.join(path.resolve(process.cwd(), "public"), "Pretendard-Bold.otf")
+            );
+            const pretendardExtraboldFont = fs.readFile(
+                path.join(path.resolve(process.cwd(), "public"), "Pretendard-ExtraBold.otf")
             );
 
 
-            const [pretendardFontData] = await Promise.all([pretendardFont]);
+            const [Medium, Semibold, Bold, Extrabold] = await Promise.all([
+                pretendardMediumFont,
+                pretendardSemiboldFont,
+                pretendardBoldFont,
+                pretendardExtraboldFont,
+            ]);
 
             return {
                 imageOptions: {
                     fonts: [
                         {
-                            name: "Pretendard",
-                            data: pretendardFontData,
+                            name: "Pretendard-Medium",
+                            data: Medium,
+                        },
+                        {
+                            name: "Pretendard-SemiBold",
+                            data: Semibold,
+                        },
+                        {
+                            name: "Pretendard-Bold",
+                            data: Bold,
+                        },
+                        {
+                            name: "Pretendard-ExtraBold",
+                            data: Extrabold,
                         },
                     ]
                 }
