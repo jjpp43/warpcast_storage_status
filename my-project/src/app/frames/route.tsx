@@ -3,8 +3,6 @@ import { Button, fetchMetadata } from 'frames.js/next';
 import { frames } from "./frames";
 import Image from 'next/image';
 
-
-
 const frameHandler = frames(async (ctx) => {
 
     return {
@@ -17,7 +15,6 @@ const frameHandler = frames(async (ctx) => {
         ],
     };
 });
-
 
 export const GET = frameHandler;
 export const POST = frameHandler;
