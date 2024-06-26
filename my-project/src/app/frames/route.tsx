@@ -7,7 +7,7 @@ import { frames } from "./frames";
 const frameHandler = frames(async (ctx) => {
 
     return {
-        image: "http://localhost:3000/background.png",
+        image: `${process.env.VERCEL_URL}/background.png`,
         buttons: [
             <Button action="post" target="/status">
                 Check status
@@ -15,9 +15,6 @@ const frameHandler = frames(async (ctx) => {
         ],
     };
 });
-
-
-
 
 
 export const GET = frameHandler;

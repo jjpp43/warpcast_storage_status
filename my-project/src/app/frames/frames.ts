@@ -24,7 +24,6 @@ export const frames = createFrames({
             hubHttpUrl: "https://nemes.farcaster.xyz:2281",
             //Use the url below for local testing
             //hubHttpUrl: "http://localhost:3010/hub",
-
         })
     ],
     basePath: "/frames",
