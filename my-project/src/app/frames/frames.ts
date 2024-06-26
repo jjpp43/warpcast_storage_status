@@ -29,6 +29,7 @@ export const frames = createFrames({
     //For more information : https://framesjs.org/guides/deployment
     baseUrl: `https://${process.env.VERCEL_URL}`,
     basePath: '/frames',
+    imagesRoute: '/',
     imageRenderingOptions: async () => {
         //Import font files
         try {
