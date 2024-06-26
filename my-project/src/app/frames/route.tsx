@@ -1,7 +1,12 @@
 /* eslint-disable react/jsx-key */
-import { Button, fetchMetadata } from 'frames.js/next';
-import { frames } from "./frames";
-const frameHandler = frames(async (ctx) => {
+import { Button, createFrames } from 'frames.js/next';
+
+
+const frames = createFrames({
+    basePath: '/frames',
+});
+
+const handleRequest = frames(async (ctx) => {
     return {
         //
         image: (
@@ -17,5 +22,5 @@ const frameHandler = frames(async (ctx) => {
     };
 });
 
-export const GET = frameHandler;
-export const POST = frameHandler;
+export const GET = handleRequest;
+export const POST = handleRequest;
