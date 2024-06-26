@@ -19,12 +19,20 @@ export const frames = createFrames({
         userDataStorage: 0,
         userFid: 406278,
     },
-    middleware: [farcasterHubContext({ hubHttpUrl: "http://localhost:3010/hub", })],
-    basePath: "/frames",
+    middleware: [
+        farcasterHubContext({
+            hubHttpUrl: "https://nemes.farcaster.xyz:2281",
+            //Use the url below for local testing
+            //hubHttpUrl: "http://localhost:3010/hub",
 
+        })
+    ],
+    basePath: "/frames",
+    baseUrl: `https://${process.env.VERCEL_URL}`,
     imageRenderingOptions: async () => {
+        //Import font files
         try {
-            //Problem is is doesn't seem to support variable fonts. Use static fonts in prevention of error
+            //Problem is the framework doesn't seem to support variable fonts. Use static fonts in prevention of error
             const pretendardSemiboldFont = fs.readFile(
                 path.join(path.resolve(process.cwd(), "public"), "Pretendard-SemiBold.otf")
             );
@@ -37,7 +45,6 @@ export const frames = createFrames({
             const pretendardExtraboldFont = fs.readFile(
                 path.join(path.resolve(process.cwd(), "public"), "Pretendard-ExtraBold.otf")
             );
-
 
             const [Medium, Semibold, Bold, Extrabold] = await Promise.all([
                 pretendardMediumFont,
