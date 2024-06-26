@@ -7,7 +7,11 @@ const frameHandler = frames(async (ctx) => {
 
     return {
         //
-        image: <Image src={'/background.png'} alt={''} />,
+        image: (
+            <div tw="bg-purple-800 text-white w-full h-full justify-center items-center flex">
+                This is rendered as an image
+            </div>
+        ),
         buttons: [
             <Button action="post" target="/tatus">
                 Check status
