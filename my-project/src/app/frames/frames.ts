@@ -28,7 +28,7 @@ export const frames = createFrames({
         })
     ],
     basePath: "/frames",
-    baseUrl: `https://${process.env.VERCEL_URL}`,
+    baseUrl: new URL(`https://${process.env.VERCEL_URL}`),
     imageRenderingOptions: async () => {
         //Import font files
         try {
