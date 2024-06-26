@@ -27,8 +27,8 @@ export const frames = createFrames({
         })
     ],
     //For more information : https://framesjs.org/guides/deployment
-    //baseUrl: `https://${process.env.VERCEL_URL}`,
-    baseUrl: 'http://localhost:3000',
+    baseUrl: `https://${process.env.VERCEL_URL}`,
+    //baseUrl: 'http://localhost:3000',
     basePath: '/frames',
     imageRenderingOptions: async () => {
         //Import font files
@@ -53,6 +53,8 @@ export const frames = createFrames({
                 pretendardBoldFont,
                 pretendardExtraboldFont,
             ]);
+
+            console.log('@@Fonts successfully imported!');
 
             return {
                 imageOptions: {

@@ -52,7 +52,7 @@ const fetchUserData = async (id: number) => {
                 userData.userDataStorage = i['used'] - 1;
             }
         });
-        console.log("Fetch Complete!!")
+        console.log("@@ Fetch Complete!!")
         console.log(userData.userCastStorage);
 
         console.log(userData.userLinkStorage);
@@ -94,10 +94,9 @@ export const POST = frames(async (ctx) => {
         let data = await fetchUserData(fid);
         if (data) {
             updatedState = data;
-            console.log("--- State Updated! ---");
+            console.log("@@  State Updated!");
             console.log("FID: ", fid);
             console.log(context);
-            console.log("----------------------");
         } else {
             console.error("Error fetching user data.");
         }
@@ -108,7 +107,6 @@ export const POST = frames(async (ctx) => {
     var castTextSignal, reactionTextSignal, linkTextSignal;
 
     var determineCapacityFunction = (val: number) => {
-        console.log('Determine Signal Function Executed!')
         if (val > 100) {
             return <span>&#x1F7E6;</span>;
         }
