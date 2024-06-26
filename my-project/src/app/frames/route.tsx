@@ -9,11 +9,7 @@ const frames = createFrames({
 const handleRequest = frames(async (ctx) => {
     return {
         //
-        image: (
-            <div tw="bg-purple-800 text-white w-full h-full justify-center items-center flex">
-                This is rendered as an image
-            </div>
-        ),
+        image: `http://localhost:3000/background.png`,
         buttons: [
             <Button action="post" target="/status">
                 Check status
