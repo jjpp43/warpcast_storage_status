@@ -1,10 +1,7 @@
 /* eslint-disable react/jsx-key */
 import { Button, fetchMetadata } from 'frames.js/next';
 import { frames } from "./frames";
-import Image from 'next/image';
-
 const frameHandler = frames(async (ctx) => {
-
     return {
         //
         image: (
@@ -13,7 +10,7 @@ const frameHandler = frames(async (ctx) => {
             </div>
         ),
         buttons: [
-            <Button action="post" target="/tatus">
+            <Button action="post" target="/status">
                 Check status
             </Button>,
         ],
