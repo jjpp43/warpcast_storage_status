@@ -12,7 +12,6 @@ export async function generateMetadata(): Promise<Metadata> {
                     ? `https://${process.env.VERCEL_URL}`
                     : "http://localhost:3000"
             )
-
         ),
     };
 }
