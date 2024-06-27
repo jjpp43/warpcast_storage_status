@@ -28,7 +28,7 @@ export const frames = createFrames({
     ],
     // For more information : https://framesjs.org/guides/deployment
     // It should be the full url of the homepage including https:// 
-    //baseUrl: `https://${process.env.VERCEL_URL}`,
+    baseUrl: `https://${process.env.VERCEL_URL}`,
     //baseUrl: 'http://localhost:3000',
     basePath: '/frames',
     imageRenderingOptions: async () => {

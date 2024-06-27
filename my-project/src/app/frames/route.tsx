@@ -2,7 +2,7 @@
 import { Button, createFrames } from 'frames.js/next';
 
 const frames = createFrames({
-    basePath: '/frames',
+    basePath: '/frames'
 });
 
 const handleRequest = frames(async (ctx) => {
